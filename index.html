@@ -98,8 +98,8 @@
       <legend>Insurance</legend>
       <div class="opt"><input type="radio" name="insurance" id="ins-aetna" value="aetna"><label for="ins-aetna">Aetna</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-uhc" value="uhc"><label for="ins-uhc">United Healthcare</label></div>
-      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-g2g" value="medicaid_g2g"><label for="ins-medicaid-g2g">Medicaid — G2G States (SC/HI/UT/CO/WY/KY/OH)</label></div>
-      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-elixer" value="medicaid_elixer"><label for="ins-medicaid-elixer">Medicaid — Elixer States (TX/NV/MO/GA/AZ)</label></div>
+      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-g2g" value="medicaid_g2g"><label for="ins-medicaid-g2g">Medicaid — G2G States (SC/HI/UT/CO/WY/KY/OH/MO)</label></div>
+      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-elixer" value="medicaid_elixer"><label for="ins-medicaid-elixer">Medicaid — Elixer States (TX/NV/GA/AZ)</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-medicareb" value="medicare_b"><label for="ins-medicareb">Medicare (Part B)</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-tricare" value="tricare"><label for="ins-tricare">TriCare</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-ppo" value="ppo"><label for="ins-ppo">PPO (other)</label></div>
@@ -144,7 +144,7 @@ const ROUTES = {
   }
 };
 const REQ_FORM_LINKS={Helixion:'https://helixioninc.com/docs/',G2G:'https://gene2genome.com/docs/',Elixer:'https://www.dropbox.com/scl/fo/hosj2zg2aozm5fat5hs63/AGa_brGORonpZrFwbmhsAW0?rlkey=htr501x9bzhept88kge6sm07j&dl=0'};
-const INSURANCE_LABELS={aetna:'Aetna',uhc:'United Healthcare',medicaid_g2g:'Medicaid (SC/HI/UT/CO/WY/KY/OH)',medicaid_elixer:'Medicaid (TX/NV/MO/GA/AZ)',medicare_b:'Medicare (Part B)',tricare:'TriCare',ppo:'PPO',hmo:'HMO'};
+const INSURANCE_LABELS={aetna:'Aetna',uhc:'United Healthcare',medicaid_g2g:'Medicaid (SC/HI/UT/CO/WY/KY/OH/MO)',medicaid_elixer:'Medicaid (TX/NV/GA/AZ)',medicare_b:'Medicare (Part B)',tricare:'TriCare',ppo:'PPO',hmo:'HMO'};
 let state={category:null,insurance:null};
 function nextThursday(from){const d=new Date(from);const day=d.getDay();let diff=(4-day+7)%7;if(diff===0)diff=7;d.setDate(d.getDate()+diff);return d;}
 function fmtDate(d){return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
