@@ -44,7 +44,9 @@
   .opt{position:relative;}
   .opt input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;}
   .opt label{display:flex;align-items:center;justify-content:center;text-align:center;min-height:46px;padding:10px 12px;border:1.5px solid var(--line);border-radius:3px;font-size:14.5px;font-weight:500;cursor:pointer;transition:border-color .12s,background .12s,transform .06s;background:#fff;line-height:1.25;}
+  .opt label .opt-sub{display:block;font-size:11.5px;font-weight:400;color:#8a8374;margin-top:2px;}
   .opt input:checked+label{border-color:var(--ink);background:var(--ink);color:var(--paper-card);}
+  .opt input:checked+label .opt-sub{color:rgba(255,255,255,0.65);}
   .opt label:active{transform:scale(0.98);}
   #result{margin-top:18px;}
   .result-card{border:2px solid var(--ink);background:var(--paper-card);padding:0;overflow:hidden;margin-bottom:10px;}
@@ -99,10 +101,10 @@
       <div class="opt"><input type="radio" name="insurance" id="ins-aetna" value="aetna"><label for="ins-aetna">Aetna</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-uhc" value="uhc"><label for="ins-uhc">United Healthcare</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-g2g" value="medicaid_g2g"><label for="ins-medicaid-g2g">Medicaid — G2G States (SC/HI/UT/CO/WY/KY/OH/MO)</label></div>
-      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-elixer" value="medicaid_elixer"><label for="ins-medicaid-elixer">Medicaid — Elixer States (TX/NV/GA/AZ)</label></div>
+      <div class="opt"><input type="radio" name="insurance" id="ins-medicaid-elixir" value="medicaid_elixir"><label for="ins-medicaid-elixir">Medicaid — Elixir States (TX/NV/GA/AZ)</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-medicareb" value="medicare_b"><label for="ins-medicareb">Medicare (Part B)</label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-tricare" value="tricare"><label for="ins-tricare">TriCare</label></div>
-      <div class="opt"><input type="radio" name="insurance" id="ins-ppo" value="ppo"><label for="ins-ppo">PPO (other)</label></div>
+      <div class="opt"><input type="radio" name="insurance" id="ins-ppo" value="ppo"><label for="ins-ppo">PPO (other)<span class="opt-sub">Humana · BCBS · Clover & more</span></label></div>
       <div class="opt"><input type="radio" name="insurance" id="ins-hmo" value="hmo"><label for="ins-hmo">HMO</label></div>
     </fieldset>
   </div>
@@ -116,7 +118,7 @@
     </div>
   </div>
   <div id="result"><div class="empty-state">Select a test category and insurance above to see routing.</div></div>
-  <footer>G2G · Helixion · Elixer — internal routing tool</footer>
+  <footer>G2G · Helixion · Elixir — internal routing tool</footer>
 </div>
 <script>
 const today = new Date();
@@ -126,25 +128,26 @@ const ROUTES = {
     aetna:{labs:[{name:'Helixion',eg:true},{name:'G2G',eg:true}],turnaround:'1–3 weeks'},
     uhc:{labs:[{name:'G2G',eg:true}],turnaround:'1–3 weeks'},
     medicaid_g2g:{labs:[{name:'G2G',eg:true}],turnaround:'1–3 weeks',note:'G2G Medicaid genetic coverage is NIPT only.'},
-    medicaid_elixer:{labs:[{name:'Elixer',eg:false}],turnaround:'1–3 weeks'},
-    medicare_b:{labs:[{name:'Elixer',eg:false}],turnaround:'1–3 weeks'},
-    tricare:{labs:[{name:'Elixer',eg:false}],turnaround:'1–3 weeks'},
-    ppo:{labs:[{name:'Helixion',eg:true},{name:'G2G',eg:true}],turnaround:'1–3 weeks',note:'Send patient demographics beforehand to qualify patient insurance. Choose the lab <strong>closest</strong> to the facility.'},
+    medicaid_elixir:{labs:[{name:'Elixir',eg:false}],turnaround:'1–3 weeks'},
+    medicare_b:{labs:[{name:'Elixir',eg:false}],turnaround:'1–3 weeks'},
+    tricare:{labs:[{name:'Elixir',eg:false}],turnaround:'1–3 weeks'},
+    ppo:{labs:[{name:'Helixion',eg:true},{name:'G2G',eg:true}],turnaround:'1–3 weeks',note:'Includes Humana, Blue Cross Blue Shield, Clover, and other PPO plans. Send patient demographics beforehand to qualify patient insurance. Choose the lab <strong>closest</strong> to the facility.'},
     hmo:{reject:true}
   },
   molecular:{
     aetna:{labs:[{name:'Helixion',eg:false},{name:'G2G',eg:false}],turnaround:'1–2 days'},
     uhc:{labs:[{name:'G2G',eg:false}],turnaround:'1–2 days'},
     medicaid_g2g:{labs:[{name:'G2G',eg:false}],turnaround:'1–2 days'},
-    medicaid_elixer:{labs:[{name:'Elixer',eg:false}],turnaround:'1–2 days'},
-    medicare_b:{labs:[{name:'Elixer',eg:false}],turnaround:'1–2 days'},
-    tricare:{labs:[{name:'Elixer',eg:false}],turnaround:'1–2 days'},
-    ppo:{labs:[{name:'Helixion',eg:false},{name:'G2G',eg:false}],turnaround:'1–2 days',note:'Choose the lab <strong>closest</strong> to the facility.'},
+    medicaid_elixir:{labs:[{name:'Elixir',eg:false}],turnaround:'1–2 days'},
+    medicare_b:{labs:[{name:'Elixir',eg:false}],turnaround:'1–2 days'},
+    tricare:{labs:[{name:'Elixir',eg:false}],turnaround:'1–2 days'},
+    ppo:{labs:[{name:'Helixion',eg:false},{name:'G2G',eg:false}],turnaround:'1–2 days',note:'Includes Humana, Blue Cross Blue Shield, Clover, and other PPO plans. Choose the lab <strong>closest</strong> to the facility.'},
     hmo:{reject:true}
   }
 };
-const REQ_FORM_LINKS={Helixion:'https://helixioninc.com/docs/',G2G:'https://gene2genome.com/docs/',Elixer:'https://www.dropbox.com/scl/fo/hosj2zg2aozm5fat5hs63/AGa_brGORonpZrFwbmhsAW0?rlkey=htr501x9bzhept88kge6sm07j&dl=0'};
-const INSURANCE_LABELS={aetna:'Aetna',uhc:'United Healthcare',medicaid_g2g:'Medicaid (SC/HI/UT/CO/WY/KY/OH/MO)',medicaid_elixer:'Medicaid (TX/NV/GA/AZ)',medicare_b:'Medicare (Part B)',tricare:'TriCare',ppo:'PPO',hmo:'HMO'};
+const REQ_FORM_LINKS={Helixion:'https://helixioninc.com/docs/',G2G:'https://gene2genome.com/docs/',Elixir:'https://www.dropbox.com/scl/fo/hosj2zg2aozm5fat5hs63/AGa_brGORonpZrFwbmhsAW0?rlkey=htr501x9bzhept88kge6sm07j&dl=0'};
+const LAB_STATES={Helixion:'Texas',G2G:'Florida'};
+const INSURANCE_LABELS={aetna:'Aetna',uhc:'United Healthcare',medicaid_g2g:'Medicaid (SC/HI/UT/CO/WY/KY/OH/MO)',medicaid_elixir:'Medicaid (TX/NV/GA/AZ)',medicare_b:'Medicare (Part B)',tricare:'TriCare',ppo:'PPO',hmo:'HMO'};
 let state={category:null,insurance:null};
 function nextThursday(from){const d=new Date(from);const day=d.getDay();let diff=(4-day+7)%7;if(diff===0)diff=7;d.setDate(d.getDate()+diff);return d;}
 function fmtDate(d){return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
@@ -163,10 +166,11 @@ function render(){
     const formLabel=(category==='genetic'&&lab.eg)?`${lab.name} — Genetic Req Form (EG)`:`${lab.name} — standard req form`;
     const link=REQ_FORM_LINKS[lab.name];
     const cc=category==='genetic'?'genetics':'molecular';
-    return `<div class="result-card"><div class="result-head ${cc}"><span class="lab-name ${cc}">${lab.name}</span><span class="badge">${catLabel}</span></div><div class="result-body"><div class="row"><span class="k">Requisition form</span><span class="v"><a href="${link}" target="_blank">${formLabel}</a></span></div><div class="row"><span class="k">Turnaround</span><span class="v">${route.turnaround}</span></div><div class="row"><span class="k">Ship by</span><span class="v">${ship.text}</span></div></div></div>`;
+    const stateRow=LAB_STATES[lab.name]?`<div class="row"><span class="k">Lab location</span><span class="v">${LAB_STATES[lab.name]}</span></div>`:'';
+    return `<div class="result-card"><div class="result-head ${cc}"><span class="lab-name ${cc}">${lab.name}</span><span class="badge">${catLabel}</span></div><div class="result-body"><div class="row"><span class="k">Requisition form</span><span class="v"><a href="${link}" target="_blank">${formLabel}</a></span></div>${stateRow}<div class="row"><span class="k">Turnaround</span><span class="v">${route.turnaround}</span></div><div class="row"><span class="k">Ship by</span><span class="v">${ship.text}</span></div></div></div>`;
   }).join('');
   let extra='';
-  if(route.labs.length>1)extra+=`<div class="multi-lab-note">Both labs accept this — physician preference decides which one.</div>`;
+  if(route.labs.length>1)extra+=`<div class="multi-lab-note">Both labs accept this — send to the lab <strong>closest</strong> to the facility (G2G: Florida · Helixion: Texas).</div>`;
   if(category==='genetic'&&route.labs.some(l=>l.eg))extra+=`<div class="req-note"><strong>Use the (EG) form.</strong> This payer requires the Genetic Requisition Form (EG) version.</div>`;
   if(route.note)extra+=`<div class="req-note">${route.note}</div>`;
   if(category==='molecular')extra+=`<div class="req-note"><strong>RPP panel?</strong> Ship within 24 hours. All other molecular: ship within 72 hours.</div>`;
